@@ -1,0 +1,167 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090d">
+  <meta name="description" content="AG AMU — Discover manga, read stories and publish your own creations.">
+  <title>AG MANGA UNIVERSE | AG AMU</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#" class="brand" data-page="home">
+      <span class="brand-icon">AMU</span>
+      <span>AG MANGA <b>UNIVERSE</b><small>YOUR STORY. YOUR UNIVERSE.</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">☰</button>
+    <nav id="mainNav">
+      <button data-page="home" class="nav-link active">Home</button>
+      <button data-page="library" class="nav-link">Explore</button>
+      <button data-page="write" class="nav-link">Write Story</button>
+      <button data-page="bookmarks" class="nav-link">Bookmarks</button>
+      <button data-page="login" class="nav-link" id="authNav">Login</button>
+      <button data-page="profile" class="nav-link" id="profileNav" hidden>My Profile</button>
+      <button id="logoutBtn" class="nav-link" hidden>Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page active" id="page-home">
+      <div class="hero">
+        <div class="hero-content">
+          <span class="eyebrow">WELCOME TO AG AMU</span>
+          <h1>EVERY STORY<br>HAS A <span>UNIVERSE.</span></h1>
+          <p>Explore manga, discover unforgettable characters, and share your own stories with readers around the world.</p>
+          <div class="hero-actions">
+            <button class="btn primary" data-page="library">Explore Library ↗</button>
+            <button class="btn secondary" data-page="write">Become a Creator</button>
+          </div>
+          <div class="hero-note">READ • CREATE • DISCOVER</div>
+        </div>
+        <div class="hero-art" aria-label="Manga inspired decoration">
+          <div class="art-circle"></div>
+          <div class="art-panel"><span>創造</span><strong>AMU</strong><small>AN UNLIMITED UNIVERSE</small></div>
+          <span class="art-label">NO. 001 / NEW WORLD</span>
+        </div>
+      </div>
+
+      <section class="content-section">
+        <div class="section-heading">
+          <div><span class="eyebrow">START YOUR JOURNEY</span><h2>Explore the Universe</h2></div>
+          <button class="text-btn" data-page="library">View all ↗</button>
+        </div>
+        <div class="category-grid">
+          <button class="category-card" data-category="Manga"><span>漫</span><b>Manga</b><small>Illustrated worlds</small></button>
+          <button class="category-card" data-category="Fantasy"><span>✦</span><b>Fantasy</b><small>Beyond imagination</small></button>
+          <button class="category-card" data-category="History"><span>⌛</span><b>History</b><small>Stories of the past</small></button>
+          <button class="category-card" data-category="Mystery"><span>◈</span><b>Mystery</b><small>Uncover the truth</small></button>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="section-heading"><div><span class="eyebrow">COMMUNITY PICKS</span><h2>Latest Stories</h2></div></div>
+        <div id="homeStories" class="story-grid"><p class="muted">Loading stories...</p></div>
+      </section>
+    </section>
+
+    <section class="page" id="page-library">
+      <div class="page-heading"><span class="eyebrow">THE COLLECTION</span><h1>Explore <span>Stories</span></h1><p>Find your next favourite universe.</p></div>
+      <div class="search-row">
+        <input id="searchInput" type="search" placeholder="Search by title or author..." aria-label="Search stories">
+        <select id="categoryFilter" aria-label="Filter category">
+          <option value="">All categories</option>
+          <option>Manga</option><option>Fantasy</option><option>History</option>
+          <option>Mystery</option><option>Romance</option><option>Action</option>
+          <option>Other</option>
+        </select>
+        <button class="btn primary" id="searchBtn">Search</button>
+      </div>
+      <div id="libraryStories" class="story-grid"></div>
+    </section>
+
+    <section class="page" id="page-reader">
+      <button class="text-btn back-btn" data-page="library">← Back to Library</button>
+      <article id="readerContent" class="reader-content"></article>
+    </section>
+
+    <section class="page" id="page-login">
+      <div class="auth-layout">
+        <div class="auth-intro"><span class="eyebrow">WELCOME BACK</span><h1>Return to your <span>universe.</span></h1><p>Sign in to continue reading and creating stories.</p></div>
+        <form class="form-card" id="loginForm">
+          <h2>Login</h2><p class="muted">Access your AG AMU account.</p>
+          <label>Email address<input name="email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required minlength="8" placeholder="Your password"></label>
+          <button class="btn primary full" type="submit">Sign In</button>
+          <button type="button" class="text-btn" data-page="forgot">Forgot password?</button>
+          <p class="form-footer">New to AG AMU? <button type="button" class="text-btn" data-page="register">Create account</button></p>
+          <p class="form-message" id="loginMessage" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="page" id="page-register">
+      <div class="auth-layout">
+        <div class="auth-intro"><span class="eyebrow">JOIN THE COMMUNITY</span><h1>Your ideas deserve a <span>world.</span></h1><p>Create an account and submit your stories for review.</p></div>
+        <form class="form-card" id="registerForm">
+          <h2>Create Account</h2>
+          <label>Display name<input name="display_name" required minlength="2" maxlength="40" autocomplete="nickname" placeholder="Your pen name"></label>
+          <label>Email address<input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
+          <label>Password<input name="password" type="password" required minlength="10" maxlength="128" autocomplete="new-password" placeholder="At least 10 characters"></label>
+          <button class="btn primary full" type="submit">Create Account</button>
+          <p class="form-footer">Already a member? <button type="button" class="text-btn" data-page="login">Login</button></p>
+          <p class="form-message" id="registerMessage" role="status"></p>
+        </form>
+      </div>
+    </section>
+
+    <section class="page" id="page-forgot">
+      <div class="form-card standalone">
+        <span class="eyebrow">ACCOUNT RECOVERY</span><h2>Reset Password</h2>
+        <p class="muted">Request a password-reset link for your account.</p>
+        <form id="forgotForm">
+          <label>Email address<input name="email" type="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"></label>
+          <button class="btn primary full" type="submit">Request Reset Link</button>
+          <p id="forgotMessage" class="form-message" role="status"></p>
+        </form>
+        <button class="text-btn" data-page="login">← Back to Login</button>
+      </div>
+    </section>
+
+    <section class="page" id="page-write">
+      <div class="page-heading"><span class="eyebrow">CREATOR STUDIO</span><h1>Write your <span>Story.</span></h1><p>Your work will be reviewed before it appears publicly.</p></div>
+      <form class="form-card wide-form" id="storyForm">
+        <label>Story title<input name="title" required minlength="2" maxlength="120" placeholder="Give your story a title"></label>
+        <div class="two-columns">
+          <label>Category<select name="category" required><option value="">Choose category</option><option>Manga</option><option>Fantasy</option><option>History</option><option>Mystery</option><option>Romance</option><option>Action</option><option>Other</option></select></label>
+          <label>Cover image URL (optional)<input name="cover_url" type="url" maxlength="500" placeholder="https://..."></label>
+        </div>
+        <label>Synopsis<textarea name="synopsis" required minlength="10" maxlength="1000" rows="3" placeholder="Introduce your story..."></textarea></label>
+        <label>Story / Chapter 1<textarea name="content" required minlength="50" maxlength="50000" rows="12" placeholder="Begin writing here..."></textarea></label>
+        <button class="btn primary" type="submit">Submit for Review ↗</button>
+        <p id="storyMessage" class="form-message" role="status"></p>
+      </form>
+    </section>
+
+    <section class="page" id="page-bookmarks">
+      <div class="page-heading"><span class="eyebrow">YOUR COLLECTION</span><h1>Book<span>marks</span></h1></div>
+      <div id="bookmarkStories" class="story-grid"></div>
+    </section>
+
+    <section class="page" id="page-profile">
+      <div class="page-heading"><span class="eyebrow">YOUR SPACE</span><h1>My <span>Profile</span></h1></div>
+      <div id="profileContent" class="form-card"></div>
+      <section class="content-section"><h2>My Story Submissions</h2><div id="myStories" class="story-grid"></div></section>
+      <section class="content-section" id="adminSection" hidden>
+        <div class="section-heading"><h2>Admin Review</h2><button class="btn secondary" id="refreshAdmin">Refresh</button></div>
+        <div id="adminStories"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <footer><a href="#" data-page="home" class="footer-brand">AG AMU</a><p>Read boldly. Create freely. Respect every creator.</p><small>© <span id="year"></span> AG MANGA UNIVERSE</small></footer>
+  <script src="script.js"></script>
+</body>
+</html>
