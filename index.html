@@ -1,1 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>AG MANGA UNIVERSE</title>
 
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080808;--panel:#141414;--line:#292929;--white:#f5f5f5;--muted:#999;--accent:#d5ff55}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif;line-height:1.6}
+button,input,textarea,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer;color:inherit}
+.container{width:min(1150px,92%);margin:auto}
+.accent{color:var(--accent)}
+.muted{color:var(--muted)}
+header{position:sticky;top:0;z-index:20;background:#080808ed;backdrop-filter:blur(15px);border-bottom:1px solid var(--line)}
+nav{height:70px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900;font-size:14px}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--accent);color:#080808;display:grid;place-items:center;font-weight:1000}
+.navlinks{display:flex;gap:20px}
+.navlinks a{font-size:12px;color:#ccc}
+.navlinks a:hover{color:var(--accent)}
+.btn{display:inline-flex;justify-content:center;align-items:center;gap:6px;padding:11px 16px;border:1px solid var(--line);border-radius:10px;background:#191919;color:white;font-weight:800;font-size:12px}
+.btn.primary{background:var(--accent);color:#111;border-color:var(--accent)}
+.btn:hover{filter:brightness(1.1)}
+.hero{padding:65px 0 35px}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:center}
+.eyebrow{color:var(--accent);font-size:11px;font-weight:900;letter-spacing:3px}
+h1{font-size:clamp(42px,7vw,78px);line-height:1.04;letter-spacing:-3px;margin:20px 0}
+.hero p{max-width:480px;font-size:14px;color:#aaa}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:25px}
+.art{min-height:330px;border:1px solid #333;border-radius:24px;display:grid;place-content:center;text-align:center;background:radial-gradient(ellipse,#333,#151515 55%,#090909);position:relative;overflow:hidden}
+.art:before,.art:after{content:"";position:absolute;width:220px;height:220px;border:1px solid #ffffff20;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%)}
+.art:after{width:310px;height:310px}
+.art strong{font-size:100px;color:var(--accent);position:relative;z-index:1}
+.art h2,.art small{position:relative;z-index:1;letter-spacing:3px}
+.art small{color:#aaa;font-size:10px}
+.stats{display:flex;gap:10px;margin-top:25px}
+.stat{flex:1;padding:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px}
+.stat strong{display:block;font-size:19px}
+.stat small{font-size:10px;color:var(--muted)}
+section{padding:35px 0}
+.heading{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:22px}
+.heading h2{font-size:27px;letter-spacing:-1px}
+.heading p{font-size:12px;color:var(--muted)}
+.categories{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.category{padding:22px;background:linear-gradient(140deg,#222,#101010);border:1px solid var(--line);border-radius:15px;text-align:left;transition:.2s}
+.category:hover{border-color:var(--accent);transform:translateY(-3px)}
+.category .symbol{font-size:28px}
+.category h3{margin-top:8px;font-size:17px}
+.category p{font-size:12px;color:var(--muted)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+input,textarea,select{width:100%;padding:12px;background:#0c0c0c;border:1px solid #333;border-radius:10px;color:white;outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--accent)}
+.tools input{flex:1;min-width:160px}
+.tools select{width:auto;max-width:160px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.card{overflow:hidden;border:1px solid var(--line);background:var(--panel);border-radius:15px;transition:.2s}
+.card:hover{transform:translateY(-3px);border-color:#666}
+.cover{height:190px;display:grid;place-items:center;position:relative;overflow:hidden;background:linear-gradient(140deg,#383838,#101010)}
+.cover:before{content:"";position:absolute;width:140px;height:140px;border:1px solid #ffffff28;border-radius:50%}
+.cover b{font-size:60px;position:relative;color:#eee}
+.c2{background:linear-gradient(140deg,#493128,#110d0b)}
+.c3{background:linear-gradient(140deg,#293b3b,#0a1010)}
+.c4{background:linear-gradient(140deg,#3d3044,#110d13)}
+.c5{background:linear-gradient(140deg,#45402b,#111009)}
+.c6{background:linear-gradient(140deg,#30354c,#0c0d14)}
+.c7{background:linear-gradient(140deg,#482d2b,#140b0b)}
+.c8{background:linear-gradient(140deg,#29422e,#0b100c)}
+.tag{position:absolute;top:9px;left:9px;background:var(--accent);color:#111;padding:4px 7px;border-radius:5px;font-size:9px;font-weight:900}
+.card-body{padding:12px}
+.card h3{font-size:14px;line-height:1.4}
+.card p{font-size:11px;color:var(--muted);margin-top:5px}
+.meta{display:flex;justify-content:space-between;gap:5px;margin-top:12px;font-size:10px;color:#999}
+.empty{grid-column:1/-1;text-align:center;padding:40px;color:#999}
+.banner{padding:30px;border:1px solid #333;border-radius:18px;background:linear-gradient(110deg,#252525,#101010);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.banner h2{font-size:clamp(24px,4vw,36px)}
+.banner p{font-size:13px;color:#aaa;margin-top:8px;max-width:550px}
+footer{margin-top:35px;padding:35px 0 90px;border-top:1px solid var(--line)}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:25px}
+footer h3,footer h4{margin-bottom:12px}
+footer p,footer a{font-size:12px;color:#999}
+.footer-links{display:grid;gap:7px}
+.copyright{margin-top:25px;padding-top:17px;border-top:1px solid var(--line);font-size:11px;color:#888}
+.modal{position:fixed;inset:0;z-index:50;background:#000d;display:none;place-items:center;padding:15px}
+.modal.open{display:grid}
+.modal-box{width:min(460px,100%);max-height:90vh;overflow:auto;padding:23px;background:#121212;border:1px solid #333;border-radius:18px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.close{border:0;background:none;font-size:26px}
+.field{margin-bottom:13px}
+.field label{display:block;font-size:12px;color:#bbb;margin-bottom:6px}
+textarea{min-height:100px;resize:vertical}
+.notice{padding:12px;margin-bottom:15px;background:#202020;border-radius:10px;color:#aaa;font-size:12px}
+.reader{white-space:pre-wrap;line-height:2;color:#ccc;margin:18px 0}
+.toast{display:none;position:fixed;z-index:70;bottom:25px;left:50%;transform:translateX(-50%);max-width:90%;padding:12px 18px;background:var(--accent);color:#111;border-radius:10px;font-size:12px;font-weight:800}
+.toast.show{display:block}
+.bottom{display:none}
+@media(max-width:850px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.navlinks{gap:10px}}
+@media(max-width:600px){
+ nav{height:64px}.brand{font-size:11px}.logo{width:34px;height:34px}.navlinks{display:none}
+ .hero{padding:42px 0 20px}.hero-grid{grid-template-columns:1fr;gap:25px}
+ h1{letter-spacing:-2px}.art{min-height:220px}.art strong{font-size:75px}
+ .stats{gap:7px}.stat{padding:10px}.categories{grid-template-columns:1fr}
+ .category{padding:16px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .cover{height:160px}.cover b{font-size:52px}.card-body{padding:10px}
+ .banner{flex-direction:column;align-items:flex-start;padding:22px}
+ .footer-grid{grid-template-columns:1fr 1fr}.footer-brand{grid-column:1/-1}
+ .bottom{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:30;justify-content:space-around;padding:9px 3px calc(9px + env(safe-area-inset-bottom));background:#0b0b0bf5;border-top:1px solid #292929}
+ .bottom a{text-align:center;font-size:10px;color:#aaa}.bottom span{display:block;font-size:18px}
+}
+</style>
+</head>
+
+<body>
+<header>
+ <nav class="container">
+  <a class="brand" href="#home"><span class="logo">AG</span><span>AG MANGA <span class="accent">UNIVERSE</span></span></a>
+  <div class="navlinks">
+   <a href="#home">Home</a><a href="#categories">Categories</a><a href="#explore">Explore</a><a href="#creators">Creators</a><a href="#about">About</a>
+  </div>
+  <button class="btn primary" onclick="openModal('login')">Sign In ↗</button>
+ </nav>
+</header>
+
+<main>
+<div class="hero" id="home">
+ <div class="container hero-grid">
+  <div>
+   <div class="eyebrow">YOUR UNIVERSE. YOUR STORIES.</div>
+   <h1>READ BEYOND <span class="accent">REALITY.</span></h1>
+   <p>Discover manga, explore immersive novels, and read original stories from creative minds around the universe.</p>
+   <div class="actions">
+    <a href="#explore" class="btn primary">Explore Stories ↗</a>
+    <button class="btn" onclick="openModal('submit')">＋ Submit Story</button>
+   </div>
+   <div class="stats">
+    <div class="stat"><strong>∞</strong><small>Possibilities</small></div>
+    <div class="stat"><strong>03</strong><small>Categories</small></div>
+    <div class="stat"><strong>AG</strong><small>Universe</small></div>
+   </div>
+  </div>
+  <div class="art"><strong>亜</strong><h2>AG UNIVERSE</h2><small>IMAGINE · CREATE · DISCOVER</small></div>
+ </div>
+</div>
+
+<section id="categories">
+ <div class="container">
+  <div class="heading"><div><p>CHOOSE YOUR WORLD</p><h2>Explore Categories</h2></div></div>
+  <div class="categories">
+   <button class="category" onclick="filterCategory('Manga')"><span class="symbol">漫</span><h3>Manga</h3><p>Action, fantasy and illustrated adventures.</p></button>
+   <button class="category" onclick="filterCategory('Novel')"><span class="symbol">文</span><h3>Novels</h3><p>Deep worlds, unforgettable characters.</p></button>
+   <button class="category" onclick="filterCategory('Story')"><span class="symbol">✦</span><h3>Stories</h3><p>Original tales from imaginative creators.</p></button>
+  </div>
+ </div>
+</section>
+
+<section id="explore">
+ <div class="container">
+  <div class="heading"><div><p>FIND YOUR NEXT ADVENTURE</p><h2>Discover Stories</h2></div><span class="muted" id="resultCount"></span></div>
+  <div class="tools">
+   <input id="searchInput" type="search" placeholder="Search title or author..." oninput="renderStories()">
+   <select id="categoryFilter" onchange="renderStories()">
+    <option value="All">All Categories</option>
+    <option value="Manga">Manga</option>
+    <option value="Novel">Novel</option>
+    <option value="Story">Stories</option>
+   </select>
+   <select id="sortFilter" onchange="renderStories()">
+    <option value="latest">Newest first</option>
+    <option value="az">Title A–Z</option>
+   </select>
+  </div>
+  <div class="grid" id="storyGrid"></div>
+ </div>
+</section>
+
+<section id="creators">
+ <div class="container">
+  <div class="banner">
+   <div><p class="eyebrow">FOR STORYTELLERS</p><h2>Create Your <span class="accent">Universe.</span></h2><p>Have an original manga, novel or story? Prepare your submission for review by the AG MANGA UNIVERSE team.</p></div>
+   <button class="btn primary" onclick="openModal('submit')">Submit Your Work ↗</button>
+  </div>
+ </div>
+</section>
+
+<section id="about">
+ <div class="container">
+  <div class="heading"><div><p>ABOUT OUR WORLD</p><h2>Welcome to AG AMU</h2></div></div>
+  <p class="muted" style="max-width:760px;font-size:14px">AG MANGA UNIVERSE is designed for manga readers, novel lovers and original storytellers. Discover new worlds, develop your characters and share your creativity. Submitted content must be reviewed before it can be published publicly.</p>
+ </div>
+</section>
+</main>
+
+<footer>
+ <div class="container">
+  <div class="footer-grid">
+   <div class="footer-brand"><a class="brand" href="#home"><span class="logo">AG</span><span>AG MANGA UNIVERSE</span></a><p style="margin-top:12px;max-width:300px">Every world begins with a story. Find yours in the AG universe.</p></div>
+   <div><h4>Explore</h4><div class="footer-links"><a href="#categories">Categories</a><a href="#explore">All Stories</a><a href="#creators">Submit Work</a></div></div>
+   <div><h4>Account</h4><div class="footer-links"><a href="#" onclick="openModal('login');return false">Sign In</a><a href="#" onclick="openModal('register');return false">Create Account</a><a href="#" onclick="openModal('forgot');return false">Reset Password</a></div></div>
+  </div>
+  <div class="copyright">© <span id="year"></span> AG MANGA UNIVERSE. All rights reserved.</div>
+ </div>
+</footer>
+
+<div class="bottom">
+ <a href="#home"><span>⌂</span>Home</a>
+ <a href="#categories"><span>▦</span>Categories</a>
+ <a href="#explore"><span>⌕</span>Explore</a>
+ <a href="#" onclick="openModal('submit');return false"><span>＋</span>Submit</a>
+ <a href="#" onclick="openModal('login');return false"><span>♙</span>Account</a>
+</div>
+
+<div class="modal" id="login">
+ <div class="modal-box">
+  <div class="modal-head"><h2>Welcome Back</h2><button class="close" onclick="closeModal('login')">×</button></div>
+  <p class="muted" style="font-size:12px;margin-bottom:18px">Sign in to your AG Universe account.</p>
+  <form onsubmit="accountAction(event,'login')">
+   <div class="field"><label>Email Address</label><input type="email" required placeholder="you@example.com" autocomplete="email"></div>
+   <div class="field"><label>Password</label><input type="password" required minlength="8" placeholder="At least 8 characters" autocomplete="current-password"></div>
+   <button class="btn primary" style="width:100%">Sign In</button>
+  </form>
+  <p style="font-size:12px;margin-top:15px"><a class="accent" href="#" onclick="switchModal('login','register');return false">Create an account</a> · <a href="#" onclick="switchModal('login','forgot');return false">Forgot password?</a></p>
+  <div class="notice" style="margin-top:16px;margin-bottom:0">Real account sign-in requires a connected backend. This standalone page does not transmit or authenticate your password.</div>
+ </div>
+</div>
+
+<div class="modal" id="register">
+ <div class="modal-box">
+  <div class="modal-head"><h2>Create Account</h2><button class="close" onclick="closeModal('register')">×</button></div>
+  <form onsubmit="accountAction(event,'register')">
+   <div class="field"><label>Display Name</label><input required maxlength="40" placeholder="Your name"></div>
+   <div class="field"><label>Email Address</label><input type="email" required placeholder="you@example.com"></div>
+   <div class="field"><label>Password</label><input type="password" minlength="8" required placeholder="At least 8 characters"></div>
+   <div class="field"><label>Confirm Password</label><input type="password" minlength="8" required placeholder="Repeat password"></div>
+   <button class="btn primary" style="width:100%">Create Account</button>
+  </form>
+  <div class="notice" style="margin-top:15px;margin-bottom:0">Account creation needs backend authentication and secure password storage. This page alone does not create a real account.</div>
+ </div>
+</div>
+
+<div class="modal" id="forgot">
+ <div class="modal-box">
+  <div class="modal-head"><h2>Reset Password</h2><button class="close" onclick="closeModal('forgot')">×</button></div>
+  <form onsubmit="accountAction(event,'forgot')">
+   <div class="field"><label>Account Email</label><input type="email" required placeholder="you@example.com"></div>
+   <button class="btn primary" style="width:100%">Request Reset</button>
+  </form>
+  <div class="notice" style="margin-top:15px;margin-bottom:0">Password reset emails require a configured backend and email service.</div>
+ </div>
+</div>
+
+<div class="modal" id="submit">
+ <div class="modal-box">
+  <div class="modal-head"><h2>Submit Your Work</h2><button class="close" onclick="closeModal('submit')">×</button></div>
+  <div class="notice">Submission preview only. Publishing requires a connected backend and admin approval. Only submit work you created or have permission to share.</div>
+  <form id="storyForm">
+   <div class="field"><label>Story Title</label><input id="newTitle" required maxlength="100" placeholder="Enter your title"></div>
+   <div class="field"><label>Author Name</label><input id="newAuthor" required maxlength="60" placeholder="Your pen name"></div>
+   <div class="field"><label>Category</label><select id="newCategory"><option>Manga</option><option>Novel</option><option>Story</option></select></div>
+   <div class="field"><label>Short Description</label><textarea id="newDescription" required maxlength="1000" placeholder="Describe your story..."></textarea></div>
+   <div class="field"><label>Cover Image URL (optional)</label><input id="newCover" type="url" placeholder="https://example.com/cover.jpg"></div>
+   <div class="field"><label>Upload Cover Image (preview only)</label><input id="coverFile" type="file" accept="image/png,image/jpeg,image/webp"></div>
+   <div id="coverPreview" class="hidden" style="margin-bottom:12px"><img id="previewImg" alt="Cover preview" style="width:100%;max-height:200px;object-fit:contain;border-radius:10px"></div>
+   <div class="field"><label>Story Content / Chapter One</label><textarea id="newContent" required maxlength="15000" placeholder="Write your original story here..."></textarea></div>
+   <label style="display:flex;gap:9px;align-items:start;font-size:12px;color:#bbb;margin-bottom:15px"><input id="rights" type="checkbox" required style="width:auto;margin-top:4px"> I confirm I created this work or have permission to submit it.</label>
+   <button class="btn primary" style="width:100%">Preview Submission</button>
+  </form>
+ </div>
+</div>
+
+<div class="modal" id="reader">
+ <div class="modal-box">
+  <div class="modal-head"><h2 id="readerTitle">Story</h2><button class="close" onclick="closeModal('reader')">×</button></div>
+  <p id="readerMeta" class="muted" style="font-size:12px"></p>
+  <p id="readerDescription" style="margin-top:15px"></p>
+  <div id="readerContent" class="reader"></div>
+  <button class="btn" onclick="closeModal('reader')">Close Reader</button>
+ </div>
+</div>
+
+<div class="modal" id="preview">
+ <div class="modal-box">
+  <div class="modal-head"><h2>Submission Preview</h2><button class="close" onclick="closeModal('preview')">×</button></div>
+  <div class="notice">Your submission has only been prepared as a local preview. It has not been uploaded, saved to a server, or sent to an administrator.</div>
+  <h3 id="previewTitle"></h3>
+  <p id="previewMeta" class="muted" style="font-size:12px;margin:7px 0"></p>
+  <p id="previewDescription" style="margin:12px 0"></p>
+  <div id="previewContent" class="reader"></div>
+  <button class="btn primary" style="width:100%" onclick="closeModal('preview');showToast('Preview closed. Connect the backend to submit for admin review.')">Done</button>
+ </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+
+const stories = [
+ {id:1,title:"The Last Shadow",author:"AG Creative",category:"Manga",description:"A mysterious warrior discovers a hidden power in a world where shadows have a life of their own.",symbol:"影",style:"",content:"Chapter One — The Beginning\n\nThe city was silent beneath the moonlight. At the edge of the old district, a young traveller discovered a strange mark glowing on a forgotten stone.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."},
+ {id:2,title:"Beyond the Stars",author:"Moon Writer",category:"Novel",description:"A young explorer sets out to discover what lies beyond the edge of the known universe.",symbol:"星",style:"c2",content:"Chapter One — The Journey\n\nThe stars had always been a mystery. Tonight, the first signal arrived from somewhere beyond the mapped universe.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."},
+ {id:3,title:"Silent Promise",author:"Ink Studio",category:"Story",description:"A heartfelt story about promises, friendship and the courage to start again.",symbol:"約",style:"c3",content:"A Promise to Remember\n\nSome promises are made in a single moment and remembered for a lifetime.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."},
+ {id:4,title:"Crimson Moon",author:"Night Writer",category:"Manga",description:"Under a crimson moon, a new generation faces an ancient mystery.",symbol:"月",style:"c4",content:"Chapter One — Crimson\n\nThe moon turned red above the silent village. Nobody knew why, but the oldest resident remembered the legend.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."},
+ {id:5,title:"The Hidden Kingdom",author:"AG Creative",category:"Novel",description:"An unexpected discovery leads to a kingdom missing from every map.",symbol:"王",style:"c5",content:"Chapter One — The Map\n\nBehind the bookshelf was a map nobody had seen before. A single name was written across its centre.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."},
+ {id:6,title:"Zero Horizon",author:"Pixel Author",category:"Manga",description:"In a future city, one student begins to question the rules of reality.",symbol:"零",style:"c6",content:"Chapter One — Zero\n\nEvery citizen received a number at birth. One morning, the system displayed a number that should not exist.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."},
+ {id:7,title:"Forgotten Letters",author:"Blue Pen",category:"Story",description:"Old letters reveal a secret that changes a family's understanding of its past.",symbol:"文",style:"c7",content:"The First Letter\n\nThe envelope had no return address. Inside, a familiar handwriting began with three words: Remember that summer.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."},
+ {id:8,title:"Forest of Echoes",author:"Green Ink",category:"Novel",description:"A traveller enters a forest where every echo tells a different story.",symbol:"森",style:"c8",content:"Chapter One — The Forest\n\nThe path ended where the trees grew thickest. From somewhere deep inside came a voice calling the traveller by name.\n\nThis is placeholder sample content. Replace it with an original story you have permission to publish."}
+];
+
+let selectedCoverData = "";
+
+function escapeHTML(value){
+ return String(value ?? "").replace(/[&<>"']/g,function(char){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char];
+ });
+}
+
+function renderStories(){
+ const query=document.getElementById("searchInput").value.trim().toLowerCase();
+ const category=document.getElementById("categoryFilter").value;
+ const sort=document.getElementById("sortFilter").value;
+ let filtered=stories.filter(story=>{
+  const matchesCategory=category==="All"||story.category===category;
+  const matchesQuery=(story.title+" "+story.author+" "+story.description).toLowerCase().includes(query);
+  return matchesCategory&&matchesQuery;
+ });
+ if(sort==="az") filtered.sort((a,b)=>a.title.localeCompare(b.title));
+ else filtered.sort((a,b)=>b.id-a.id);
+
+ document.getElementById("resultCount").textContent=filtered.length+" stories";
+ const grid=document.getElementById("storyGrid");
+ if(!filtered.length){
+  grid.innerHTML='<div class="empty">No stories found. Try another search.</div>';
+  return;
+ }
+ grid.innerHTML=filtered.map(story=>{
+  const safeTitle=escapeHTML(story.title);
+  return `<article class="card">
+   <div class="cover ${escapeHTML(story.style)}">
+    <span class="tag">${escapeHTML(story.category)}</span>
+    <b>${escapeHTML(story.symbol)}</b>
+   </div>
+   <div class="card-body">
+    <h3>${safeTitle}</h3>
+    <p>by ${escapeHTML(story.author)}</p>
+    <p>${escapeHTML(story.description)}</p>
+    <div class="meta"><span>${escapeHTML(story.category)}</span><button class="accent" style="border:0;background:none;font-size:10px" onclick="readStory(${Number(story.id)})">Read ↗</button></div>
+   </div>
+  </article>`;
+ }).join("");
+}
+
+function filterCategory(category){
+ document.getElementById("categoryFilter").value=category;
+ renderStories();
+ document.getElementById("explore").scrollIntoView({behavior:"smooth"});
+}
+
+function readStory(id){
+ const story=stories.find(item=>item.id===id);
+ if(!story)return;
+ document.getElementById("readerTitle").textContent=story.title;
+ document.getElementById("readerMeta").textContent=story.category+" · by "+story.author;
+ document.getElementById("readerDescription").textContent=story.description;
+ document.getElementById("readerContent").textContent=story.content;
+ openModal("reader");
+}
+
+function openModal(id){
+ const modal=document.getElementById(id);
+ if(modal)modal.classList.add("open");
+}
+function closeModal(id){
+ const modal=document.getElementById(id);
+ if(modal)modal.classList.remove("open");
+}
+function switchModal(from,to){
+ closeModal(from);
+ openModal(to);
+}
+
+let toastTimeout;
+function showToast(message){
+ const toast=document.getElementById("toast");
+ toast.textContent=message;
+ toast.classList.add("show");
+ clearTimeout(toastTimeout);
+ toastTimeout=setTimeout(()=>toast.classList.remove("show"),3500);
+}
+
+function accountAction(event,type){
+ event.preventDefault();
+ if(type==="register"){
+  const fields=event.target.querySelectorAll('input[type="password"]');
+  if(fields.length===2&&fields[0].value!==fields[1].value){
+   showToast("Passwords do not match.");
+   return;
+  }
+ }
+ const messages={
+  login:"Connect a secure authentication backend to sign in.",
+  register:"Connect a backend to create your account securely.",
+  forgot:"Connect an email service and backend for password resets."
+ };
+ closeModal(type);
+ showToast(messages[type]);
+}
+
+document.getElementById("coverFile").addEventListener("change",function(event){
+ const file=event.target.files&&event.target.files[0];
+ selectedCoverData="";
+ if(!file){
+  document.getElementById("coverPreview").classList.add("hidden");
+  return;
+ }
+ if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
+  showToast("Choose a JPG, PNG or WebP image.");
+  event.target.value="";
+  return;
+ }
+ if(file.size>5*1024*1024){
+  showToast("Image must be smaller than 5 MB.");
+  event.target.value="";
+  return;
+ }
+ const reader=new FileReader();
+ reader.onload=function(){
+  selectedCoverData=String(reader.result||"");
+  document.getElementById("previewImg").src=selectedCoverData;
+  document.getElementById("coverPreview").classList.remove("hidden");
+ };
+ reader.readAsDataURL(file);
+});
+
+document.getElementById("storyForm").addEventListener("submit",function(event){
+ event.preventDefault();
+ const title=document.getElementById("newTitle").value.trim();
+ const author=document.getElementById("newAuthor").value.trim();
+ const category=document.getElementById("newCategory").value;
+ const description=document.getElementById("newDescription").value.trim();
+ const content=document.getElementById("newContent").value.trim();
+ const rights=document.getElementById("rights").checked;
+ if(!rights){
+  showToast("Please confirm you have the rights to submit this work.");
+  return;
+ }
+ document.getElementById("previewTitle").textContent=title;
+ document.getElementById("previewMeta").textContent=category+" · by "+author;
+ document.getElementById("previewDescription").textContent=description;
+ document.getElementById("previewContent").textContent=content;
+ closeModal("submit");
+ openModal("preview");
+});
+
+document.querySelectorAll(".modal").forEach(modal=>{
+ modal.addEventListener("click",function(event){
+  if(event.target===modal)modal.classList.remove("open");
+ });
+});
+document.addEventListener("keydown",function(event){
+ if(event.key==="Escape"){
+  document.querySelectorAll(".modal.open").forEach(modal=>modal.classList.remove("open"));
+ }
+});
+document.getElementById("year").textContent=new Date().getFullYear();
+renderStories();
+</script>
+</body>
+</html>
